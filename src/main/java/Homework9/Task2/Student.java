@@ -2,6 +2,7 @@ package Homework9.Task2;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class Student {
     private String name;
@@ -28,18 +29,24 @@ public class Student {
     }
 
     public ArrayList<Student> filterAndPromoteStudents(ArrayList<Student> students) {
-        int i = 0;
-        for (Student s : students) {
-            i++;
-            if (s.getAverageGrade() >= 3) {
-                s.setCourse(s.course + 1);
+        Iterator<Student> it = students.iterator();
+        while (it.hasNext()) {
+            Student s = it.next();
+            if (s.getAverageGrade()>=3) {
+               s.setCourse(s.getCourse()+1);
             } else {
-                students.remove(i);
+                it.remove();
             }
         }
         return students;
     }
 
+    public void printStudents(ArrayList<Student> students) {
+        for (Student s : students) {
+            System.out.println(s.getName() + " course: " + s.getCourse());
+
+        }
+    }
 
     // getters and setters
     public String getName() {
