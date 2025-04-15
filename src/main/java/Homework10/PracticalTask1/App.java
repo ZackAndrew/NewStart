@@ -1,6 +1,7 @@
 package Homework10.PracticalTask1;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -17,6 +18,7 @@ public class App {
         employeeMap.put(1005, "Ethan");
         employeeMap.put(1006, "Fiona");
         employeeMap.put(1007, "George");
+        employeeMap.put(1008, "George");
 
         // output employees
         System.out.println(employeeMap);
@@ -29,9 +31,18 @@ public class App {
         else
             System.out.println("Here is not employee with " + inputID + " ID");
 
-        System.out.println("Enter employee name");
-        String inputName = scan.nextLine();
-        if (employeeMap.containsValue(inputName))
-            System.out.println(inputName + " has "+employeeMap.get(inputName));
+        scan.nextLine();
+        System.out.println("Enter employee name: ");
+        String inputName = scan.nextLine().trim().toUpperCase();
+        boolean found = false;
+        for (Map.Entry<Integer, String> entry : employeeMap.entrySet()) {
+            if (entry.getValue().toUpperCase().equals(inputName))
+                System.out.println(entry.getValue() + " has " + entry.getKey() + " ID");
+            else
+                found = true;
+        }
+        if (!found)
+            System.out.println("Not found this name");
     }
 }
+

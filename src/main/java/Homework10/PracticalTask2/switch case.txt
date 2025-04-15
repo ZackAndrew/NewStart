@@ -1,0 +1,7 @@
+case 1: show employees
+case 2: add employee
+case 3: edit employee
+case 4: remove employee
+case 5: sort employees (by name and ID)
+case 6: close controlPanel
+default: incorrect input
