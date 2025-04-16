@@ -1,5 +1,6 @@
 package Homework10.PracticalTask2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -34,28 +35,35 @@ public class Employee {
             System.out.println("1. Show employees list\n2. Add employee\n3. Edit employee" +
                     "\n4. Remove employee\n5. Sort employees\n6. Close control panel\n\nChoose action:\n");
             choice = scan.nextInt();
+            scan.nextLine();
             switch (choice) {
                 case 1:
-                    for (Map.Entry<Integer, Employee> entry : employeesHashMap.entrySet()) {
-                        System.out.println(entry.toString());
-                    }
+                    printEmployees(employeesHashMap);
                     break;
                 case 2:
                     addEmployee(employeesHashMap);
                     break;
+                case 3:
+                    editEmployee(employeesHashMap);
+                    break;
+                case 4:
+                    removeEmployee(employeesHashMap);
+                    break;
+                case 6:
+                    return;
             }
         }
     }
 
-    public HashMap<Integer, Employee> addEmployee(HashMap<Integer, Employee> employeeHashMap) {
-        String inputName;
-        int inputID;
-        String inputPosition;
-        double inputSalary;
-        String inputBirthdate;
+    public void printEmployees(HashMap<Integer, Employee> employeeHashMap) {
+        for (Map.Entry<Integer, Employee> entry : employeeHashMap.entrySet()) {
+            System.out.println(entry.toString());
+        }
+    }
 
+    public String addName(HashMap<Integer, Employee> employeeHashMap) {
+        String inputName;
         while (true) {
-            scan.nextLine();
             System.out.println("Enter employee name: ");
             inputName = scan.nextLine().trim();
             boolean duplicatedFound = false;
@@ -70,6 +78,17 @@ public class Employee {
                 break;
             }
         }
+        return inputName;
+    }
+
+    public void addEmployee(HashMap<Integer, Employee> employeeHashMap) {
+        String inputName;
+        int inputID;
+        String inputPosition;
+        double inputSalary;
+        String inputBirthdate;
+
+        inputName = addName(employeeHashMap);
 
         while (true) {
             boolean duplicateFound = false;
@@ -93,8 +112,87 @@ public class Employee {
 
         employeeHashMap.put(inputID, new Employee(inputID, inputName, inputPosition, inputSalary, inputBirthdate));
         System.out.println("Employee added successfully");
-        return employeeHashMap;
+
     }
+
+    public void editEmployee(HashMap<Integer, Employee> employeeHashMap) {
+        printEmployees(employeeHashMap);
+        System.out.println("Enter ID of employee who you want to edit: ");
+        int inputEmployee = scan.nextInt();
+        scan.nextLine();
+
+        Employee emp = employeeHashMap.get(inputEmployee);
+        if (emp != null) {
+            while (true) {
+                System.out.println("1. Change name\n2. Change position\n" +
+                        "3. Change salary\n4. Change birthdate" +
+                        "\n5. Stop editing\nChose action:");
+                int choice = scan.nextInt();
+                scan.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        String newName = addName(employeeHashMap);
+                        emp.setName(newName);
+                        System.out.println("Name has been updated.");
+                        break;
+                    case 2:
+                        System.out.println("Enter new position:");
+                        emp.setPosition(scan.nextLine());
+                        System.out.println("Position has been updated.");
+                        break;
+                    case 3:
+                        System.out.println("Enter new salary:");
+                        emp.setSalary(scan.nextDouble());
+                        scan.nextLine();
+                        System.out.println("Salary has been updated.");
+                        break;
+                    case 4:
+                        System.out.println("Enter new birthdate:");
+                        emp.setBirthdate(scan.nextLine());
+                        System.out.println("Birthdate has been updated.");
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        System.out.println("Invalid choice, try again");
+                }
+            }
+        }
+    }
+
+    public void removeEmployee(HashMap<Integer, Employee> employeeHashMap) {
+        printEmployees(employeeHashMap);
+        while (true) {
+            System.out.println("Chose employee ID who you want to delete, or enter 0 to cancel: ");
+            int input = scan.nextInt();
+            scan.nextLine();
+            if (employeeHashMap.containsKey(input)) {
+                System.out.println("Are you sure that you want to delete this employee?");
+                System.out.println("1. Yes");
+                System.out.println("2. No");
+                int choice = scan.nextInt();
+                scan.nextLine();
+                switch (choice) {
+                    case 1:
+                        employeeHashMap.remove(input);
+                        System.out.println("Employee has been deleted.");
+                        return;
+                    case 2:
+                        System.out.println("Action canceled.");
+                        return;
+                    default:
+                        System.out.println("Invalid input.");
+                        return;
+                }
+            } else if (input == 0) {
+                System.out.println("Action canceled.");
+                return;
+            } else
+                System.out.println("Invalid input, try again");
+        }
+    }
+
 
     @Override
     public String toString() {
