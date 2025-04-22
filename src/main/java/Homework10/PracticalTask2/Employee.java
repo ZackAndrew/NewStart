@@ -1,9 +1,6 @@
 package Homework10.PracticalTask2;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Employee {
     Scanner scan = new Scanner(System.in);
@@ -48,6 +45,9 @@ public class Employee {
                     break;
                 case 4:
                     removeEmployee(employeesHashMap);
+                    break;
+                case 5:
+                    sortEmployees(employeesHashMap);
                     break;
                 case 6:
                     return;
@@ -192,6 +192,45 @@ public class Employee {
                 System.out.println("Invalid input, try again");
         }
     }
+
+    public void sortEmployees(HashMap<Integer, Employee> employeeHashMap) {
+        if (employeeHashMap.isEmpty()) {
+            System.out.println("No employees to sort.");
+            return;
+        }
+
+        System.out.println("Sort employees by:\n1. Name\n2. ID\n3. Position\n4. Salary");
+        int sortChoice = scan.nextInt();
+        scan.nextLine(); // clear newline
+
+        // Convert values to list
+        List<Employee> employeeList = new ArrayList<>(employeeHashMap.values());
+
+        switch (sortChoice) {
+            case 1:
+                employeeList.sort((e1, e2) -> e1.getName().compareToIgnoreCase(e2.getName()));
+                break;
+            case 2:
+                employeeList.sort((e1, e2) -> Integer.compare(e1.getId(), e2.getId()));
+                break;
+            case 3:
+                employeeList.sort((e1, e2) -> e1.getPosition().compareToIgnoreCase(e2.getPosition()));
+                break;
+            case 4:
+                employeeList.sort((e1, e2)-> Double.compare(e1.getSalary(), e2.getSalary()));
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                return;
+        }
+
+        // Print sorted list
+        System.out.println("Sorted employees:");
+        for (Employee emp : employeeList) {
+            System.out.println(emp);
+        }
+    }
+
 
 
     @Override
