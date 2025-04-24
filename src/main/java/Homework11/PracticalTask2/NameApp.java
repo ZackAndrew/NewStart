@@ -7,6 +7,7 @@ public class NameApp {
         String middleName = "Ruslanovych";
         String lastName = "Zakordonskyi";
 
+
         String initials = firstName.toUpperCase().charAt(0) + "." + middleName.toUpperCase().charAt(0) + ".";
 
         System.out.println(lastName + " " + initials);

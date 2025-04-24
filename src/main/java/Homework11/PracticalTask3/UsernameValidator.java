@@ -15,6 +15,7 @@ public class UsernameValidator {
 
         String regex = "^[\\w]{3,5}$";
 
+
 //        for (String s : usernames){
 //            if (Pattern.)
 //        }
