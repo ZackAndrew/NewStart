@@ -1,8 +1,6 @@
 package Homework10.Task3;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class StudentApp {
     public static void main(String[] args) {
